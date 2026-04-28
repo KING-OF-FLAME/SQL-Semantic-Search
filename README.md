@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-  <h1>🚀 SQL Semantic Search Engine (ADYPU Chat)</h1>
+  <h1>🚀 NLP-Based: Hybrid RAG-Based Semantic Search Engine with Web Crawling (ADYPU Chat)</h1>
   <p><strong>A Next-Generation AI Chatbot and Grounded Answer Engine with RAG Pipeline</strong></p>
 </div>
 
