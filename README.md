@@ -19,8 +19,8 @@
 The **ADYPU Chat** is a highly advanced, pnpm workspace monorepo powered by TypeScript. It features a public chat interface with citation cards, confidence badges, a multi-page admin dashboard, and a supercharged RAG (Retrieval-Augmented Generation) semantic search engine utilizing PostgreSQL (with `pgvector`) and advanced crawler integrations. 
 
 <div align="center">
-  <a href="attached_assets/image_1774793185271.png"><img src="attached_assets/image_1774793185271.png" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px;" alt="ADYPU Chat Interface"/></a>
-  <a href="attached_assets/image_1774793226127.png"><img src="attached_assets/image_1774793226127.png" style="max-width: 100%; height: auto; border-radius: 8px;" alt="ADYPU Admin Dashboard"/></a>
+  <a href="assets/chat_interface.png"><img src="assets/chat_interface.png" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px;" alt="ADYPU Chat Interface"/></a>
+  <a href="assets/admin_dashboard.png"><img src="assets/admin_dashboard.png" style="max-width: 100%; height: auto; border-radius: 8px;" alt="ADYPU Admin Dashboard"/></a>
 </div>
 
 This project represents an end-to-end industry-level solution for grounded answering mechanisms, complete with web search enhancements and JWT-secured administrative routes.
