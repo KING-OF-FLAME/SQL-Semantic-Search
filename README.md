@@ -19,51 +19,59 @@
 The **ADYPU Chat** is a highly advanced, pnpm workspace monorepo powered by TypeScript. It features a public chat interface with citation cards, confidence badges, a multi-page admin dashboard, and a supercharged RAG (Retrieval-Augmented Generation) semantic search engine utilizing PostgreSQL (with `pgvector`) and advanced crawler integrations. 
 
 <div align="center">
-  <img src="attached_assets/image_1774793185271.png" width="800" alt="ADYPU Chat Interface" style="border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); margin-bottom: 20px;"/>
-  <br/>
-  <img src="attached_assets/image_1774793226127.png" width="800" alt="ADYPU Admin Dashboard" style="border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);"/>
+  <a href="attached_assets/image_1774793185271.png"><img src="attached_assets/image_1774793185271.png" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px;" alt="ADYPU Chat Interface"/></a>
+  <a href="attached_assets/image_1774793226127.png"><img src="attached_assets/image_1774793226127.png" style="max-width: 100%; height: auto; border-radius: 8px;" alt="ADYPU Admin Dashboard"/></a>
 </div>
 
-With built-in **Web Enhanced Search** utilizing live HTML scraping and dynamic AI intents, this project represents an end-to-end industry-level solution for grounded answering mechanisms.
+This project represents an end-to-end industry-level solution for grounded answering mechanisms, complete with web search enhancements and JWT-secured administrative routes.
 
 ---
 
 ## 🔥 Core Features
 
-*   **🎙️ Smart Chat Interface**: Public-facing React + Vite frontend with Shadcn UI, showing confidence scores and dynamic RAG citations.
-*   **🛠️ Admin Dashboard**: Secure JWT-authenticated portal to view activity statistics, control indexing rules, manage queries, and configure crawler sources.
-*   **🧠 Semantic RAG Pipeline**: Uses state-of-the-art Embeddings to search PostgreSQL pgvector databases efficiently.
-*   **🕸️ Built-In Web Crawler**: Automatically scrapes, chunks, and injects pages into the semantic index.
-*   **🪄 Web Enhanced Search**: Dynamically enhances database knowledge with live internet queries seamlessly integrated via DDG HTML.
+*   **🎙️ Smart Chat Interface**: Public-facing React + Vite frontend showing confidence scores, citation cards, and fallback queries. 
+*   **🧠 Semantic RAG Pipeline**: Uses state-of-the-art Embeddings (`text-embedding-3-small`) to search PostgreSQL `pgvector` databases efficiently. Applies Full-Text Search (FTS) pre-filtering and cosine similarity re-ranking.
+*   **🕸️ Built-In Web Crawler**: Automatically scrapes (`cheerio`), chunks, and injects pages into the semantic index via a sophisticated job queue tracking failure/success states.
+*   **🪄 Web Enhanced Search (DuckDuckGo)**: Dynamically enhances database knowledge with live internet queries seamlessly integrated via HTML scraping (No API Key Required). Can be toggled from the settings!
+*   **🛠️ Admin Dashboard**: Secure JWT-authenticated portal to view activity statistics, control indexing rules, and manage crawler sources.
 
 ---
 
-## 🏗️ Architecture & Tech Stack
+## 🏗️ Monorepo Architecture 
 
-This project strictly utilizes a bleeding-edge modern web stack:
+The project uses `pnpm workspaces` consisting of multiple robustly isolated packages:
 
-*   **Frontend**: React, Vite, Tailwind CSS, Shadcn UI
-*   **Backend**: Node.js, Express 5, TypeScript
-*   **Database**: PostgreSQL & Drizzle ORM
-*   **AI Integration**: OpenAI (text-embedding-3-small, GPT-4o-mini)
-*   **Validation**: Zod (OpenAPI generated definitions via Orval)
+- **`@workspace/api-server`**: Express 5 backend APIs, RAG algorithms, crawler logic.
+- **`@workspace/adypu-chat`**: Frontend UI built on React, Vite, and Shadcn.
+- **`@workspace/db`**: Database configuration utilizing **Drizzle ORM** and PostgreSQL.
+- **`@workspace/api-spec`**: OpenAPI 3 specs powering auto-generated React Query hooks (`@workspace/api-client-react`) and Zod schemas (`@workspace/api-zod`).
+
+---
+
+## 🗄️ Database Schema & Entities
+
+The PostgreSQL schema is fully typed and version-controlled via Drizzle. Notable core tables include:
+- `users` & `roles` — Secure authentication and access control logic.
+- `sources`, `crawl_jobs`, & `documents` — Intelligent web crawler definitions tracking crawling tasks and raw HTML extraction.
+- `document_chunks` & `document_entities` — Indexed pgvector chunks and NLP-extracted intent entities.
+- `query_logs` & `answer_logs` — Advanced audit trails recording search query confidence scores and AI intent resolutions.
 
 ---
 
 ## 🛠️ Installation & Setup Guide
 
-To ensure a seamless launch of this project, carefully follow these local deployment steps:
-
 ### 1. Prerequisites 
 - Ensure you have **Node.js** (v24 or later) installed.
 - Install **pnpm** globally: `npm install -g pnpm`.
-- Setup **PostgreSQL** (version 15+ recommended) and ensure the `pgvector` extension is enabled on your specific database instance.
+- Setup **PostgreSQL** (version 15+ recommended) and ensure the `pgvector` extension is installed.
 
 ### 2. Environment Configuration
-Create a `.env` file in the root directory based on `.env.example`:
+Create a `.env` file in the root directory:
 ```env
 # Point this to your PostgreSQL instance
-DATABASE_URL="postgresql://user:password@localhost:5432/adypu_chat"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/adypu_chat"
+
+# Set your OpenAI configuration for Embeddings and NLP intent generation.
 OPENAI_API_KEY="your-openai-api-key"
 ```
 
@@ -74,22 +82,23 @@ pnpm install
 ```
 
 ### 4. Database Setup (Drizzle Schema Push)
-Instead of a manual SQL import, use Drizzle ORM to automatically push the schema and create tables:
+Initialize the PostgreSQL database and safely push the schema using Drizzle:
 ```bash
-# From the root directory:
+# Push schema from the root directory:
 pnpm --filter @workspace/db run push-force
 ```
 
 ### 5. Running the Application
-Spin up both the Frontend API server and the React UI simultaneously by running:
+Spin up both the Frontend API server and the React UI simultaneously:
 ```bash
 pnpm run dev
 ```
 
-> **Admin Access Credentials** 
+> **🔑 Admin Access Credentials** 
 > *Username:* `admin`
 > *Password:* `adypu-admin-2024`
-> (Seeded automatically upon first boot)
+> 
+> *Note: Credentials and JWT secrets are seeded automatically upon the first successful boot in `src/lib/startup.ts`.*
 
 ---
 
