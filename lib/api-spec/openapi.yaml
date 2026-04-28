@@ -1,0 +1,707 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: ADYPU Grounded Answer Engine API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: chat
+    description: Chat and RAG pipeline
+  - name: admin
+    description: Admin operations
+  - name: feedback
+    description: Feedback operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /chat:
+    post:
+      operationId: chat
+      tags: [chat]
+      summary: Ask a question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Answer with citations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/crawl/start:
+    post:
+      operationId: startCrawl
+      tags: [admin]
+      summary: Start a new crawl job
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrawlStartRequest"
+      responses:
+        "200":
+          description: Crawl started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrawlJobResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/crawl/recrawl:
+    post:
+      operationId: recrawlStale
+      tags: [admin]
+      summary: Recrawl stale content
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Recrawl started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrawlJobResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get admin dashboard stats
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/documents:
+    get:
+      operationId: getAdminDocuments
+      tags: [admin]
+      summary: Get indexed documents
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: source
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Documents list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentsListResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/questions/low-confidence:
+    get:
+      operationId: getLowConfidenceQuestions
+      tags: [admin]
+      summary: Get unanswered or low-confidence questions
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Low-confidence questions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LowConfidenceQuestionsResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/sources:
+    get:
+      operationId: getAdminSources
+      tags: [admin]
+      summary: Get allowed crawl sources
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Sources list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourcesListResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/sources/add:
+    post:
+      operationId: addSource
+      tags: [admin]
+      summary: Add an allowed crawl source
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddSourceRequest"
+      responses:
+        "200":
+          description: Source added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceItem"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/sources/{id}:
+    delete:
+      operationId: removeSource
+      tags: [admin]
+      summary: Remove an allowed crawl source
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Source removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /feedback:
+    post:
+      operationId: submitFeedback
+      tags: [feedback]
+      summary: Submit feedback on an answer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FeedbackRequest"
+      responses:
+        "200":
+          description: Feedback recorded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/UserInfo"
+      required:
+        - token
+        - user
+
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        role:
+          type: string
+      required:
+        - id
+        - username
+        - role
+
+    ChatRequest:
+      type: object
+      properties:
+        question:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        sessionId:
+          type: string
+      required:
+        - question
+
+    ChatResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+        intent:
+          type: string
+        entities:
+          type: array
+          items:
+            $ref: "#/components/schemas/EntityItem"
+        citations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Citation"
+        confidence:
+          $ref: "#/components/schemas/ConfidenceScore"
+        queryLogId:
+          type: integer
+        rewrittenQuery:
+          type: string
+      required:
+        - answer
+        - intent
+        - entities
+        - citations
+        - confidence
+
+    EntityItem:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: string
+      required:
+        - type
+        - value
+
+    Citation:
+      type: object
+      properties:
+        chunkId:
+          type: integer
+        documentTitle:
+          type: string
+        sourceUrl:
+          type: string
+        excerpt:
+          type: string
+        relevanceScore:
+          type: number
+      required:
+        - chunkId
+        - documentTitle
+        - sourceUrl
+        - excerpt
+        - relevanceScore
+
+    ConfidenceScore:
+      type: object
+      properties:
+        score:
+          type: number
+        label:
+          type: string
+          enum: [High, Medium, Low]
+        breakdown:
+          type: object
+          properties:
+            retrieval:
+              type: number
+            rerank:
+              type: number
+            sourceAgreement:
+              type: number
+            freshness:
+              type: number
+            answerability:
+              type: number
+      required:
+        - score
+        - label
+
+    CrawlStartRequest:
+      type: object
+      properties:
+        sourceIds:
+          type: array
+          items:
+            type: integer
+        maxDepth:
+          type: integer
+          default: 3
+
+    CrawlJobResponse:
+      type: object
+      properties:
+        jobId:
+          type: integer
+        status:
+          type: string
+        message:
+          type: string
+      required:
+        - jobId
+        - status
+
+    AdminStats:
+      type: object
+      properties:
+        totalDocuments:
+          type: integer
+        totalChunks:
+          type: integer
+        failedPages:
+          type: integer
+        totalSources:
+          type: integer
+        activeJob:
+          $ref: "#/components/schemas/CrawlJobSummary"
+        recentJobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/CrawlJobSummary"
+        lowConfidenceCount:
+          type: integer
+      required:
+        - totalDocuments
+        - totalChunks
+        - failedPages
+        - totalSources
+        - recentJobs
+        - lowConfidenceCount
+
+    CrawlJobSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+        pagesFound:
+          type: integer
+        pagesProcessed:
+          type: integer
+        pagesFailed:
+          type: integer
+        startedAt:
+          type: string
+        completedAt:
+          type: string
+      required:
+        - id
+        - status
+        - pagesFound
+        - pagesProcessed
+        - pagesFailed
+
+    DocumentsListResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentItem"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+      required:
+        - documents
+        - total
+        - page
+        - limit
+
+    DocumentItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        sourceUrl:
+          type: string
+        contentType:
+          type: string
+        chunkCount:
+          type: integer
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - title
+        - sourceUrl
+        - contentType
+        - chunkCount
+
+    LowConfidenceQuestionsResponse:
+      type: object
+      properties:
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QueryLogItem"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+      required:
+        - questions
+        - total
+        - page
+        - limit
+
+    QueryLogItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        intent:
+          type: string
+        confidenceScore:
+          type: number
+        confidenceLabel:
+          type: string
+        createdAt:
+          type: string
+        hasAnswer:
+          type: boolean
+      required:
+        - id
+        - question
+        - intent
+        - confidenceScore
+        - confidenceLabel
+        - createdAt
+        - hasAnswer
+
+    SourcesListResponse:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceItem"
+      required:
+        - sources
+
+    SourceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        domain:
+          type: string
+        urlPattern:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+      required:
+        - id
+        - domain
+        - urlPattern
+        - isActive
+
+    AddSourceRequest:
+      type: object
+      properties:
+        domain:
+          type: string
+        urlPattern:
+          type: string
+        seedUrl:
+          type: string
+      required:
+        - domain
+        - urlPattern
+
+    FeedbackRequest:
+      type: object
+      properties:
+        queryLogId:
+          type: integer
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+      required:
+        - queryLogId
+        - rating

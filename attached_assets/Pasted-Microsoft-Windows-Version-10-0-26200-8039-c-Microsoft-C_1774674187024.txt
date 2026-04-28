@@ -1,0 +1,113 @@
+Microsoft Windows [Version 10.0.26200.8039]
+(c) Microsoft Corporation. All rights reserved.
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>pnpm --filter @workspace/adypu-chat run dev
+
+> @workspace/adypu-chat@0.0.0 dev E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\adypu-chat
+> vite --config vite.config.ts --host 0.0.0.0
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:115
+                throw new Error(
+                      ^
+
+Error: Cannot find module @rollup/rollup-win32-x64-msvc. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at requireWithFriendlyError (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:115:9)
+    at Object.<anonymous> (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:124:76)
+    at Module._compile (node:internal/modules/cjs/loader:1554:14)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at cjsLoader (node:internal/modules/esm/translators:262:5)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:196:7) {
+  [cause]: Error: Cannot find module '@rollup/rollup-win32-x64-msvc'
+  Require stack:
+  - E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+      at Function._load (node:internal/modules/cjs/loader:1055:27)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+      at Module.require (node:internal/modules/cjs/loader:1311:12)
+      at require (node:internal/modules/helpers:136:16)
+      at requireWithFriendlyError (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:97:10)
+      at Object.<anonymous> (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:124:76)
+      at Module._compile (node:internal/modules/cjs/loader:1554:14)
+      at Object..js (node:internal/modules/cjs/loader:1706:10) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      'E:\\Desktop\\CLASS\\VI\\NLP\\midterm\\2\\SQL-Semantic-Search\\SQL-Semantic-Search\\node_modules\\.pnpm\\rollup@4.59.0\\node_modules\\rollup\\dist\\native.js'
+    ]
+  }
+}
+
+Node.js v22.14.0
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\adypu-chat:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/adypu-chat@0.0.0 dev: `vite --config vite.config.ts --host 0.0.0.0`
+Exit status 1
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>rmdir /s /q node_modules
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>pnpm install
+Scope: all 9 workspace projects
+artifacts/api-server                     |  WARN  deprecated @types/bcryptjs@3.0.0
+ WARN  2 deprecated subdependencies found: node-domexception@1.0.0, whatwg-encoding@3.1.1
+Packages: +642
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 657, reused 641, downloaded 1, added 642, done
+node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild: Running postinstall script, done in 4.1s
+. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm…
+│ 'sh' is not recognized as an internal or external command,
+│ operable program or batch file.
+└─ Failed in 42ms at E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search
+ ELIFECYCLE  Command failed with exit code 1.
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>pnpm --filter @workspace/adypu-chat run dev
+
+> @workspace/adypu-chat@0.0.0 dev E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\adypu-chat
+> vite --config vite.config.ts --host 0.0.0.0
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:115
+                throw new Error(
+                      ^
+
+Error: Cannot find module @rollup/rollup-win32-x64-msvc. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at requireWithFriendlyError (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:115:9)
+    at Object.<anonymous> (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:124:76)
+    at Module._compile (node:internal/modules/cjs/loader:1554:14)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at cjsLoader (node:internal/modules/esm/translators:262:5)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:196:7) {
+  [cause]: Error: Cannot find module '@rollup/rollup-win32-x64-msvc'
+  Require stack:
+  - E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js
+      at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+      at Function._load (node:internal/modules/cjs/loader:1055:27)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+      at Module.require (node:internal/modules/cjs/loader:1311:12)
+      at require (node:internal/modules/helpers:136:16)
+      at requireWithFriendlyError (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:97:10)
+      at Object.<anonymous> (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\rollup@4.59.0\node_modules\rollup\dist\native.js:124:76)
+      at Module._compile (node:internal/modules/cjs/loader:1554:14)
+      at Object..js (node:internal/modules/cjs/loader:1706:10) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      'E:\\Desktop\\CLASS\\VI\\NLP\\midterm\\2\\SQL-Semantic-Search\\SQL-Semantic-Search\\node_modules\\.pnpm\\rollup@4.59.0\\node_modules\\rollup\\dist\\native.js'
+    ]
+  }
+}
+
+Node.js v22.14.0
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\adypu-chat:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/adypu-chat@0.0.0 dev: `vite --config vite.config.ts --host 0.0.0.0`
+Exit status 1
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>

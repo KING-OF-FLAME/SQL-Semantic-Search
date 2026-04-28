@@ -1,0 +1,14 @@
+packages:
+  "framer-motion": "For smooth chat bubble animations and typing indicators"
+  "react-markdown": "To properly render formatted AI responses with lists and bold text"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility to merge Tailwind classes without style conflicts"
+  "lucide-react": "For UI icons like send, user, and bot"
+
+images:
+  - path: "artifacts/adypu-chat/public/images/logo.png"
+    description: "Ajeenkya DY Patil University official minimalist logo crest in deep navy blue and gold on a transparent background, clean vector style, professional"
+    aspect_ratio: "1:1"
+
+notes:
+  - "Assuming @workspace/api-client-react exports the React Query hooks (useCreateConversation, useSendMessage) and types (Message) directly."

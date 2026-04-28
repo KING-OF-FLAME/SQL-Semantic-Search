@@ -1,0 +1,66 @@
+Here are all the details you need:
+
+Admin Login Details
+
+Username: admin
+Password: adypu-admin-2024
+How to Change Admin Credentials
+
+Open this file:
+
+artifacts/api-server/src/lib/startup.ts
+Find this section and update the username and password:
+
+await db.insert(usersTable).values({
+  username: "admin",          // ← Change this
+  passwordHash,
+  ...
+});
+And the password is hashed from this line just above it:
+
+const passwordHash = await bcrypt.hash("adypu-admin-2024", 12);  // ← Change this
+After changing, restart the server — it only creates the admin if none exists, so you'll need to delete the existing admin row from the database first, or use the database to update the password hash directly.
+
+How to Change the Logo
+
+Replace the logo image file at:
+
+artifacts/adypu-chat/public/images/logo.png
+Just overwrite that file with your new logo image (keep the filename logo.png). It's used in the top navigation bar of the public chat page.
+
+Local Setup Guide (after downloading ZIP)
+
+Prerequisites:
+
+Node.js v18+ → https://nodejs.org
+pnpm → npm install -g pnpm
+PostgreSQL v14+ → https://www.postgresql.org/download
+Step 1 — Create a database
+
+psql -U postgres
+CREATE DATABASE adypu;
+\q
+Step 2 — Install dependencies
+
+cd your-project-folder
+pnpm install
+Step 3 — Create environment file
+
+Create a file called .env inside artifacts/api-server/ with:
+
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/adypu
+JWT_SECRET=any-long-random-string
+OPENAI_API_KEY=sk-your-openai-key
+PORT=8080
+Step 4 — Push the database schema
+
+pnpm --filter @workspace/db run push
+Step 5 — Start the backend (Terminal 1)
+
+pnpm --filter @workspace/api-server run dev
+Step 6 — Start the frontend (Terminal 2)
+
+pnpm --filter @workspace/adypu-chat run dev
+Step 7 — Open the app
+
+Visit http://localhost:5173 in your browser. The admin user and ADYPU sources are created automatically on first startup. Then go to /admin/login, sign in, and start a crawl to index the university content.

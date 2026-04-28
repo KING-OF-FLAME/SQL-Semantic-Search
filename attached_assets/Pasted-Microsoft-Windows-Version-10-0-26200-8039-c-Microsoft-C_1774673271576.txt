@@ -1,0 +1,51 @@
+Microsoft Windows [Version 10.0.26200.8039]
+(c) Microsoft Corporation. All rights reserved.
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>pnpm --filter @workspace/api-server run build
+
+> @workspace/api-server@0.0.0 build E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\api-server
+> node ./build.mjs
+
+
+  dist\index.mjs                       5.6mb
+  dist\pino-worker.mjs               153.7kb
+  dist\pino-file.mjs                 142.3kb
+  dist\pino-pretty.mjs               114.8kb
+  dist\thread-stream-worker.mjs        7.5kb
+  dist\index.mjs.map                  11.2mb
+  dist\pino-worker.mjs.map           257.0kb
+  dist\pino-file.mjs.map             229.1kb
+  dist\pino-pretty.mjs.map           203.9kb
+  dist\thread-stream-worker.mjs.map   12.0kb
+
+Done in 875ms
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>pnpm --filter @workspace/api-server run start
+
+> @workspace/api-server@0.0.0 start E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\api-server
+> node --enable-source-maps ./dist/index.mjs
+
+[10:17:47.065] INFO (23268): Startup seed: settings seeded
+[10:17:47.070] ERROR (23268): Error listening on port
+    err: {
+      "type": "Error",
+      "message": "listen EADDRINUSE: address already in use :::3000",
+      "stack":
+          Error: listen EADDRINUSE: address already in use :::3000
+              at Server.setupListenHandle [as _listen2] (node:net:1937:16)
+              at listenInCluster (node:net:1994:12)
+              at Server.listen (node:net:2099:7)
+              at Function.listen (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\node_modules\.pnpm\express@5.2.1\node_modules\express\lib\application.js:605:24)
+              at main (E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\api-server\src\index.ts:16:7)
+              at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      "code": "EADDRINUSE",
+      "errno": -4091,
+      "syscall": "listen",
+      "address": "::",
+      "port": 3000
+    }
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search\artifacts\api-server:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/api-server@0.0.0 start: `node --enable-source-maps ./dist/index.mjs`
+Exit status 1
+
+E:\Desktop\CLASS\VI\NLP\midterm\2\SQL-Semantic-Search\SQL-Semantic-Search>
